@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.7.0.201506251244-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+		<configSuffix><![CDATA[java]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>java:com.opm.snds.config.AppConfig</config>
+		<config>java:com.opm.snds.config.HibernateConfiguration</config>
+		<config>java:com.opm.snds.config.SecurityConfig</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+		<configSet>
+			<name><![CDATA[configone]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>java:com.opm.snds.config.AppConfig</config>
+				<config>java:com.opm.snds.config.HibernateConfiguration</config>
+				<config>java:com.opm.snds.config.SecurityConfig</config>
+			</configs>
+			<profiles>
+			</profiles>
+		</configSet>
+	</configSets>
+</beansProjectDescription>
