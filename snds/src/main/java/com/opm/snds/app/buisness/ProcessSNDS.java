@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +27,6 @@ public class ProcessSNDS {
 		        taskExecutor.execute(_SNDS);
 				taskExecutor.shutdown();
 				taskExecutor.awaitTermination(0, TimeUnit.SECONDS);
-				taskExecutor.
 	        }catch (Exception e){
 	        	 e.printStackTrace();
 	        }
