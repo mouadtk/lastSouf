@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope("prototype")
-public class TaskOne extends AbstractProcess{
+public class TaskOne extends AbstractTask{
 	
 	String LinkA;
 	

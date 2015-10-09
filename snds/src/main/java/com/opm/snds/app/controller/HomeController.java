@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.opm.snds.app.buisness.AbstractProcess;
+import com.opm.snds.app.buisness.AbstractTask;
 import com.opm.snds.app.buisness.TaskFactory;
 import com.opm.snds.app.buisness.TaskOne;
 import com.opm.snds.app.buisness.TaskTow;
@@ -29,7 +29,8 @@ import com.opm.snds.app.model.Server;
 /**
  * Handles requests for the application home page.
  */
-@Controller("/")
+@Controller
+@RequestMapping(value = { "/", "" })
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -46,11 +47,10 @@ public class HomeController {
 	@Autowired
 	TaskTow T2;
 	
-	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * 
 	 */
-	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/","/home", "/index"}, method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model) {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
