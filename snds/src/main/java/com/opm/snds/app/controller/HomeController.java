@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.opm.snds.app.buisness.AbstractTask;
+import com.opm.snds.app.buisness.AbstractProcess;
 import com.opm.snds.app.buisness.TaskFactory;
 import com.opm.snds.app.buisness.TaskOne;
 import com.opm.snds.app.buisness.TaskTow;
@@ -79,20 +79,6 @@ public class HomeController {
 		mv.addObject("task2",AllTasks.GetTask("task2").getId());
 		
 		return mv;
-	}
-	
-	@RequestMapping(value="/saveip", method =  RequestMethod.GET)
-	public String saveip(){
-		
-		IPAdress ip = new  IPAdress();
-		ip.setData(null);
-		ip.setDomain("somedomain.com");
-		ip.setDSN(" dont klnow what is this dsn");
-		ip.setIP("162.251.166.194");
-		ip.setMailBox("postmaster@somedomain.com");
-		ipdao.AddIPAdress(ip);
-	
-		return "home/index";
 	}
 	
 	@RequestMapping(value="/get", method =  RequestMethod.GET, params = "search")

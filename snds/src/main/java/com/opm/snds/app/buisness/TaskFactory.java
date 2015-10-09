@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 public class TaskFactory {
 	
-	Map<String, AbstractTask> Tasks = new HashMap<String, AbstractTask>();
+	Map<String, AbstractProcess> Tasks = new HashMap<String, AbstractProcess>();
 	
-	public void NewTask(String key, AbstractTask value){
+	public void NewTask(String key, AbstractProcess value){
 		Tasks.put(key, value);
 	}
 	
-	public AbstractTask GetTask(String key) {
+	public AbstractProcess GetTask(String key) {
 			return Tasks.get(key);
 	}
 	

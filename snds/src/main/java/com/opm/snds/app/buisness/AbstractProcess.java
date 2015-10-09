@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope("prototype")
-public class AbstractTask extends Thread {
+public abstract class AbstractProcess extends Thread {
 	
 	long id;
 	Date StartDate;
@@ -14,9 +14,9 @@ public class AbstractTask extends Thread {
 	String Status;
 	Date TimeMax;
 	
-	public AbstractTask(){}
+	public AbstractProcess(){}
 	
-	public AbstractTask(long _id, Date _start, Date _end, String _status, Date _timeMax){
+	public AbstractProcess(long _id, Date _start, Date _end, String _status, Date _timeMax){
 		
 		id 			= _id;
 		StartDate 	= _start;
