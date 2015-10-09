@@ -9,16 +9,21 @@ import org.springframework.stereotype.Service;
 public abstract class AbstractTask extends Thread {
 	
 	long id;
+	String Taskname;
 	Date StartDate;
 	Date EndDate;
 	String Status;
 	Date TimeMax;
 	
+	/**
+	 * Constructors
+	 **/
 	public AbstractTask(){}
 	
-	public AbstractTask(long _id, Date _start, Date _end, String _status, Date _timeMax){
+	public AbstractTask(long _id,String name, Date _start, Date _end, String _status, Date _timeMax){
 		
 		id 			= _id;
+		Taskname	= name;
 		StartDate 	= _start;
 		EndDate		= _end;
 		Status 		= _status;
@@ -32,6 +37,15 @@ public abstract class AbstractTask extends Thread {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+
+	public String getTaskname() {
+		return Taskname;
+	}
+
+	public void setTaskname(String taskname) {
+		Taskname = taskname;
 	}
 
 	public Date getStartDate() {
@@ -65,27 +79,29 @@ public abstract class AbstractTask extends Thread {
 	public void setTimeMax(Date timeMax) {
 		TimeMax = timeMax;
 	}
-
+	
 	/***********************/
 	
 	@Override
 	public void run(){
-		
+		Status =  "Run";
 	}
 	
 	void Launch(){
-		System.out.println("launching task "+id+"...");
+		System.out.println("launching 	task "+id+" ...");
 	}
 	
 	void Stop(){
-		System.out.println("Stoping task "+id+"...");
+		Status =  "Stop";
+		System.out.println("Stoping 	task "+id+" ...");
 	}
 	
 	void Resume(){
-		System.out.println("Resuming task "+id+"...");
+		Status =  "Run";
+		System.out.println("Resuming 	task "+id+" ...");
 	}
-
+	
 	void Kill(){
-		System.out.println("Killing task "+id+" bye!!");
+		System.out.println("Killing 	task "+id+" bye!!");
 	}
 }

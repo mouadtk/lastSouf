@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.jetty.util.thread.Timeout.Task;
@@ -18,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.opm.snds.app.buisness.AbstractTask;
+import com.opm.snds.app.buisness.RegisterSNDS;
 import com.opm.snds.app.buisness.TaskFactory;
 import com.opm.snds.app.buisness.TaskOne;
-import com.opm.snds.app.buisness.TaskTow;
+import com.opm.snds.app.buisness.TaskTwo;
 import com.opm.snds.app.dao.IPadressDAO;
 import com.opm.snds.app.dao.ServerDAO;
 import com.opm.snds.app.model.IPAdress;
@@ -42,45 +44,91 @@ public class HomeController {
 	@Autowired
 	TaskFactory AllTasks; 
 	
-	@Autowired
-	TaskOne T1;
-	@Autowired
-	TaskTow T2;
 	
-	/**
-	 * 
-	 */
-	@RequestMapping(value = {"/","/home", "/index"}, method = RequestMethod.GET)
-	public ModelAndView home(Locale locale, Model model) {
+	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+	public ModelAndView home(Locale locale, Model model,@RequestParam(value = "TaskKey") String key) {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
-		ModelAndView mv = new  ModelAndView("home/index");
+		ModelAndView mv = new  ModelAndView("home/home");
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
+		
 		/**
-		 * here the work begins 
+		 * here the work begins	
+		TaskOne  t1 = (TaskOne) AllTasks.CeateTask("Task1");
+		TaskTwo  t2 = (TaskTwo) AllTasks.CeateTask("Task2");
+		t1.setId(1);
+		t2.setId(2);
+		AllTasks.AddNewTask("1", t1);
+		AllTasks.AddNewTask("2", t2);
+		mv.addObject("task1","eeeeeeee");
+		mv.addObject("task2",AllTasks.GetTask("2").getId());
+		*/
+		return mv;
+	}
+	
+	@RequestMapping(value="/AddTask", method =  RequestMethod.GET)
+	public ModelAndView index( @RequestParam(value = "TaskKey") String key){
+		
+		/**
+		 * return the id Task, if exists
+		 * return the count of taks in present
 		 **/
-		T1.setId(1);
-		T2.setId(2);
-		AllTasks.NewTask("task1", T1);
-		AllTasks.NewTask("task2", T2);
-		
-		return mv;
-	}
-	
-	@RequestMapping(value="/index", method =  RequestMethod.GET)
-	public ModelAndView save(){
-		
 		ModelAndView mv = new  ModelAndView("home/index");
-		mv.addObject("task1",AllTasks.GetTask("task1").getId());
-		mv.addObject("task2",AllTasks.GetTask("task2").getId());
+		RegisterSNDS  t1 = (RegisterSNDS) AllTasks.CeateTask("SNDS");
+		t1.setId(new Random().nextInt());
+		t1.setTaskname(key);
+		
+		AllTasks.AddNewTask(key, t1);
+		mv.addObject("task",AllTasks.GetTask(key).getId());
+		mv.addObject("count",AllTasks.getTasks().size());
+		return mv;
+	}
+	
+	@RequestMapping(value="/TaskCount", method =  RequestMethod.GET)
+	public ModelAndView Count(){
+		/**
+		 * return the count of current taks
+		 **/
+		ModelAndView mv = new  ModelAndView("home/TaskList");
+		mv.addObject("count",AllTasks.getTasks().size());
+		mv.addObject("tasks",AllTasks.getTasks());
 		
 		return mv;
 	}
 	
+	@RequestMapping(value="/RunTask", method = RequestMethod.GET)
+	public ModelAndView TaskDetails( @RequestParam(value = "TaskKey") String key){
+		
+		ModelAndView mv = new  ModelAndView("home/TaskDetails");
+		AllTasks.GetTask(key).run();
+		mv.addObject("task" , AllTasks.GetTask(key));
+		mv.addObject("count", AllTasks.getTasks().size());
+		
+		return mv;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**********************************************************************************************************/
 	@RequestMapping(value="/get", method =  RequestMethod.GET, params = "search")
 	public String get(Model model, @RequestParam(value = "search") String search){
 		
@@ -95,13 +143,11 @@ public class HomeController {
 			//this.srv.getServersIPs(search);
 			model.addAttribute("serverTime", MyServer.getDomain() +" - "+MyServer.getName());
 		}
-		else{ 
+		else{
 			model.addAttribute("serverTime", "null");
 		}
 		
 		return "home/index";
 	}
-	
-	
 	
 }

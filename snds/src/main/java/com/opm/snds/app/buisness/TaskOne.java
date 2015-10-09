@@ -17,8 +17,8 @@ public class TaskOne extends AbstractTask{
 		LinkA =  "link 2 B";
 	}
 
-	public TaskOne(long _id, Date _start, Date _end, String _status, Date _timeMax) {
-		super(_id,_start, _end, _status, _timeMax);
+	public TaskOne(long _id, String name, Date _start, Date _end, String _status, Date _timeMax) {
+		super(_id, name, _start, _end, _status, _timeMax);
 		LinkA =  "link 2 B";
 	}
 

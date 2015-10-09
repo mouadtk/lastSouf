@@ -6,11 +6,10 @@
 </head>
 <body>
 <h1>
-	Page Index !  
+	Page Index:  
 </h1>
 
-<P>  task1 ${task1}. </P>
-<P>  task2 ${task2}. </P>
-
+<P>  task1   (${task}). </P>
+<P>  Count  : ${count}	 </P> 
 </body>
 </html>

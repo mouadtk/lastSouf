@@ -7,17 +7,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope("prototype")
-public class TaskTow extends AbstractTask{
+public class TaskTwo extends AbstractTask{
 	
 	String LinkB;
 	
-	public TaskTow(){
+	public TaskTwo(){
 		super();
 		LinkB =  "link 2 B";
 	}
 
-	public TaskTow(long _id, Date _start, Date _end, String _status, Date _timeMax) {
-		super(_id,_start, _end, _status, _timeMax);
+	public TaskTwo(long _id, String name, Date _start, Date _end, String _status, Date _timeMax) {
+		super(_id, name,_start, _end, _status, _timeMax);
 		LinkB =  "link 2 B";
 	}
+
 }

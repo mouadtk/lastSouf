@@ -29,7 +29,7 @@ import com.opm.snds.app.model.UserAccount;
 
 @Service
 @Scope("prototype")
-public class RegisterSNDS extends Thread {
+public class RegisterSNDS extends AbstractTask {
 
 	/**
 	 * 
@@ -45,8 +45,8 @@ public class RegisterSNDS extends Thread {
 	private List<Server> _SERVERS;
 	private List<UserAccount>  _USER;
 
-	private String PostmasterUsername = "tribak.mouad";
-	private String PostmasterPassword = "4A66T6vfWKxs";
+	private String postmasterUsername = "tribak.mouad";
+	private String postmasterPassword = "4A66T6vfWKxs";
 	
 	@Autowired
 	IPadressDAO ipDOA;
@@ -212,11 +212,11 @@ public class RegisterSNDS extends Thread {
 		 * Double Authentication
 		 * */
 		
-		driver.get("http://" + PostmasterUsername + ":" + PostmasterPassword + "@" + _Postmaster_Link);
+		driver.get("http://" + postmasterUsername + ":" + postmasterPassword + "@" + _Postmaster_Link);
 		driver.findElement(By.cssSelector("input[name=log]")).clear();
-		driver.findElement(By.cssSelector("input[name=log]")).sendKeys(PostmasterUsername);
+		driver.findElement(By.cssSelector("input[name=log]")).sendKeys(postmasterUsername);
 		driver.findElement(By.cssSelector("input[name=pass]")).clear();
-		driver.findElement(By.cssSelector("input[name=pass]")).sendKeys(PostmasterPassword);
+		driver.findElement(By.cssSelector("input[name=pass]")).sendKeys(postmasterPassword);
 		driver.findElement(By.cssSelector("input[type=submit]")).click();
 		
 		/**
@@ -299,14 +299,15 @@ public class RegisterSNDS extends Thread {
 				System.out.println("i: "+i);
 				count++;
 				_IP.setState("SNDS");
-				try{
-				ipDOA.UpdateIPAdress(_IP);
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+				
 				if(null == checkRDNS(_IP)){
 					if(doRegisterSNDS(_IP, _USER.get(i))){
 						System.out.println(_IP.getIP());
+						try{
+							ipDOA.UpdateIPAdress(_IP);
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 					}
 				}else{
 					System.out.println(_IP.getDomain()+" "+_IP.getIP()+" rDNS problem"); 
@@ -317,19 +318,6 @@ public class RegisterSNDS extends Thread {
 	}
 	
 	
-	@Override
-	public void run(){
-		try{
-			System.out.println("bdina...");
-			int a = ProcessSNDSList();
-			System.out.println("SNDS Final Res. :"+a);
-			System.out.println("salina...");
-		} catch (Exception e) {
-			e.printStackTrace();
-			if(driver!=null)
-				driver.quit();
-		}
-	}
 	
 	public static void main(String[] args) throws Exception {
 //
@@ -383,6 +371,45 @@ public class RegisterSNDS extends Thread {
 
 	public void set_USER(List<UserAccount> _USER) {
 		this._USER = _USER;
+	}
+
+
+	@Override
+	public void run(){
+		try{
+			System.out.println("bdina...");
+			int a = ProcessSNDSList();
+			System.out.println("SNDS Final Res. :"+a);
+			System.out.println("salina...");
+		} catch (Exception e) {
+			e.printStackTrace();
+			if(driver!=null)
+				driver.quit();
+		}
+	}
+
+	public WebDriver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public String getPostmasterUsername() {
+		return postmasterUsername;
+	}
+
+	public void setPostmasterUsername(String postmasterUsername) {
+		this.postmasterUsername = postmasterUsername;
+	}
+
+	public String getPostmasterPassword() {
+		return postmasterPassword;
+	}
+
+	public void setPostmasterPassword(String postmasterPassword) {
+		this.postmasterPassword = postmasterPassword;
 	}
 
 }
