@@ -110,21 +110,12 @@ public class ServerServiceImpl implements ServerService {
 		
 		return MyServers;
 	}
-	
+
 	@Override
 	public boolean CheckRDNS(IPAdress ip) {
-		
-		InetAddress addr;
-		try {
-			
-			addr = InetAddress.getByName(ip.getIP());
-			String host = addr.getCanonicalHostName();
-			return ip.getParent().getDomain().equals(host);
-			
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return false;
-		}
+		// TODO Auto-generated method stub
+		return false;
 	}
+
 
 }

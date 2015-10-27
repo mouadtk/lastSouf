@@ -9,7 +9,7 @@
 	Page Index:  
 </h1>
 
-<P>  task1   (${task}). </P>
-<P>  Count  : ${count}	 </P> 
+<P>  task1   (${task}).  </P><br>
+<P>  Count  : ${count}	 </P>
 </body>
 </html>
