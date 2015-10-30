@@ -65,7 +65,7 @@ public class RegisterSNDS extends AbstractTask {
 			addr = InetAddress.getByName(ip.getIP());
 			String host = addr.getCanonicalHostName();
 			System.out.println(host+ " " + ip.getParent().getDomain() + " " +ip.getDomain());
-			if( host.equals(ip.getParent().getDomain()) )
+			if( host.equals(ip.getParent().getDomain()))
 				return host;
 			if( host.equals(ip.getDomain()) )
 				return host;
@@ -97,7 +97,7 @@ public class RegisterSNDS extends AbstractTask {
 		try {
 			ChromeDriverService service = new ChromeDriverService.Builder()
 					.usingDriverExecutable(
-							new File("C:/Users/Mailer/Desktop/snds/src/main/resources/chromedriver.exe"))
+							new File("src/main/resources/chromedriver.exe"))
 					.usingAnyFreePort().withEnvironment(ImmutableMap.of("DISPLAY", ":0.0")).build();
 			driver = new ChromeDriver(service);
 			driver.get(_URL_Login);
@@ -105,13 +105,13 @@ public class RegisterSNDS extends AbstractTask {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}	
-		
+	}
+
 	private boolean Login(String email, String passwd) {
 		
 		/**
 		 * Login
-		 */
+		 **/
 		try {
 			/** fill the login form & submit */
 			WebElement Email = driver.findElement(By.name("loginfmt"));
@@ -316,29 +316,25 @@ public class RegisterSNDS extends AbstractTask {
 		}
 		return count;
 	}
-	
-	
-	
+		
 	public static void main(String[] args) throws Exception {
-//
-//		IPAdress ip = new IPAdress();
-//		ip.setIP("68.233.227.35");
-//		ip.setDomain("bivse.developersture.com");
-//		Server srv =  new Server();	
-//		srv.setDomain("developersture.com");
-//		srv.setName("ssv999");		
-//		ip.setParent(srv);			
-//		
-//		UserAccount usr = new UserAccount();
-//		usr.setLogin("euni84forrest71444@hotmail.com");
-//		usr.setPasswd("3hkk6vIahcbB");
-//		 /**
-//		  *	L9issa lkamila.		
-//		  **/						
-//		RegisterSNDS snds = new RegisterSNDS();
-//		snds.doRegisterSNDS(ip,usr);
+
+		IPAdress ip = new IPAdress();
+		ip.setIP("68.233.227.35");
+		ip.setDomain("bivse.developersture.com");
+		Server srv =  new Server();	
+		srv.setDomain("developersture.com");
+		srv.setName("ssv999");		
+		ip.setParent(srv);			
 		
-		
+		UserAccount usr = new UserAccount();
+		usr.setLogin("euni84forrest71444@hotmail.com");
+		usr.setPasswd("3hkk6vIahcbB");
+		 /**
+		  *	L9issa lkamila.		
+		  **/						
+		RegisterSNDS snds = new RegisterSNDS();
+		snds.doRegisterSNDS(ip,usr);
 		
 		/***
 		rDNS 
@@ -351,7 +347,6 @@ public class RegisterSNDS extends AbstractTask {
 	public IPadressDAO getIpDOA() {
 		return ipDOA;
 	}
-	
 	
 	public void setIpDOA(IPadressDAO ipDOA) {
 		this.ipDOA = ipDOA;
@@ -372,7 +367,6 @@ public class RegisterSNDS extends AbstractTask {
 	public void set_USER(List<UserAccount> _USER) {
 		this._USER = _USER;
 	}
-
 
 	@Override
 	public void run(){
