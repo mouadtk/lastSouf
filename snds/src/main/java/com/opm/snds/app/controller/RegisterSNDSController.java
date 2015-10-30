@@ -17,6 +17,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.opm.snds.app.Service.ServerService;
@@ -39,25 +41,23 @@ public class RegisterSNDSController {
     private Environment environment;
 	
 	@Autowired 
-	ServerDAO srv;
+	ServerDAO DAO_Server;
 	@Autowired 
-	IPadressDAO ipdao;
+	IPadressDAO DAO_IP;
+	
 	@Autowired
 	ServerService S_Server;
 	@Autowired	
-	RegisterSNDS  RegSNDS;
+	RegisterSNDS  Reg_SNDS;
 	@Autowired
-	ProcessSNDS ProcessSNDS;
+	ProcessSNDS Proce_SNDS;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 **/
 	@RequestMapping(value = {"/", "", "/RegisterForm"}, method = RequestMethod.GET)
-	public ModelAndView home() {
+	public ModelAndView home(){
 		
 		ModelAndView mv = new ModelAndView("register/form");
-		
-		
-		
 		try{
 			/***
 			 * User Accounts that'll be used
@@ -67,44 +67,45 @@ public class RegisterSNDSController {
 			usr.setPasswd("p4EZBVzwZKtb");
 			List<UserAccount> Users =  new ArrayList<UserAccount>();
 			Users.add(usr);
-			
 			/**
 			 * Load And Persist Servers(With IPs) in Database
 			 **/
 			Map<String, Server> MyServers = new HashMap<String, Server>();
 			String SrouceFile = environment.getRequiredProperty("ServersFileSrc");
+			System.out.println("file path :"+SrouceFile);
 			MyServers = S_Server.LoadServers(SrouceFile, MyServers);
 			List<Server> Servers =  new ArrayList<Server>(MyServers.values());
 			/**
 			 * Process SNDS khaddama
 			 **/
-			RegSNDS.set_SERVERS( Servers );
-			RegSNDS.set_USER(Users);
-			//this.ProcessSNDS.doSNDS("tole", RegSNDS);
+			Reg_SNDS.set_SERVERS( Servers );
+			Reg_SNDS.set_USER(Users);
+			//this.ProcessSNDS.doSNDS("tole", Reg_SNDS);
 			
 		}catch(Exception e){
 			mv.addObject("message",e.getMessage());
 			return mv;
-			
 		}
-		
 		return  mv;
-	
 	}
 	
 	@RequestMapping( value = {"/doRegister"}, method = RequestMethod.GET )
 	public ModelAndView doRegister(){
 		
 		ModelAndView mv = new ModelAndView("register/form");
-		mv.addObject("message",RegSNDS.get_USER() != null ? RegSNDS.get_USER().get(0).getLogin() : 0 );
+		mv.addObject("message",Reg_SNDS.get_USER() != null ? Reg_SNDS.get_USER().get(0).getLogin() : 0 );
 		return  mv;
 	}
 	
- 	@RequestMapping(value = {"/doRegister1"}, method = RequestMethod.GET)
-	public ModelAndView doRegister1(){
+	/***
+	 * @param id: Server ID
+	 * @return dont know yet
+	 ***/
+	@RequestMapping(value = "/doRegistration", method = RequestMethod.GET)
+	public @ResponseBody String doRegistration(@RequestParam("name") String name){
 		
-		ModelAndView mv = new ModelAndView("register/form");
-		mv.addObject("message",RegSNDS.get_USER() != null ? RegSNDS.get_USER().get(0).getLogin() : 0 );
-		return  mv;
+		Server _SRV = DAO_Server.getServerByName(name);
+		
+		return  "";
 	}
 }

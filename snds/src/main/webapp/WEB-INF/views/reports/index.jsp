@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <!-- Template Name: Rapido - Responsive Admin Template build with Twitter Bootstrap 3.x Version: 1.0 Author: ClipTheme -->
 <!--[if IE 8]>
@@ -386,8 +386,8 @@
                src="${pageContext.request.contextPath}/assets/plugins/select2/select2.min.js"></script>
             <script type="text/javascript"
                src="${pageContext.request.contextPath}/assets/js/table-data.js"></script>
-            <script type="text/javascript"
-               src="${pageContext.request.contextPath}/assets/scripts/script_01.js"></script>
+            <!-- script type="text/javascript"
+               src="${pageContext.request.contextPath}/assets/scripts/script_01.js"></script> -->
             <!-- end: JAVASCRIPTS REQUIRED FOR SUBVIEW CONTENTS -->
             <!-- start: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
             <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
@@ -403,6 +403,8 @@
             <script>
                jQuery(document).ready(function() {
                	Main.init();
+              	//FormElements.init();
+				TableData.init();
                });
             </script>
          </body>
