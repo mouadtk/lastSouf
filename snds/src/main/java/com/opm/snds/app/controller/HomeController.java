@@ -1,5 +1,6 @@
 package com.opm.snds.app.controller;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -7,7 +8,6 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
-import org.eclipse.jetty.util.thread.Timeout.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.opm.snds.app.buisness.AbstractTask;
 import com.opm.snds.app.buisness.RegisterSNDS;
 import com.opm.snds.app.buisness.TaskFactory;
-import com.opm.snds.app.buisness.TaskOne;
-import com.opm.snds.app.buisness.TaskTwo;
 import com.opm.snds.app.dao.IPadressDAO;
 import com.opm.snds.app.dao.ServerDAO;
 import com.opm.snds.app.model.IPAdress;
@@ -32,7 +29,7 @@ import com.opm.snds.app.model.Server;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping(value = { "/", "" })
+@RequestMapping(value = { "/home"})
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -43,9 +40,18 @@ public class HomeController {
 	IPadressDAO ipdao;
 	@Autowired
 	TaskFactory AllTasks; 
+		
+	@RequestMapping(value={"/index","/", ""}, method = RequestMethod.GET)
+	public ModelAndView index(Principal user){
+		
+		
+		ModelAndView mv =  new ModelAndView("/home/home");
+		mv.addObject("user", user.getName());
+		return mv;
 	
+	}
 	
-	@RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/home"}, method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model,@RequestParam(value = "TaskKey") String key) {
 		
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -71,7 +77,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/AddTask", method =  RequestMethod.GET)
-	public ModelAndView index( @RequestParam(value = "TaskKey") String key){
+	public ModelAndView AddTask( @RequestParam(value = "TaskKey") String key){
 		
 		/**
 		 * return the id Task, if exists
@@ -113,21 +119,7 @@ public class HomeController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**********************************************************************************************************/
 	@RequestMapping(value="/get", method =  RequestMethod.GET, params = "search")
 	public String get(Model model, @RequestParam(value = "search") String search){
@@ -141,7 +133,7 @@ public class HomeController {
 			MyServer.setChilds(listIPs);
 			srv.UpdateServer(MyServer);
 			//this.srv.getServersIPs(search);
-			model.addAttribute("serverTime", MyServer.getDomain() +" - "+MyServer.getName());
+			model.addAttribute("serverTime", MyServer.getDomain() +" - "+ MyServer.getName());
 		}
 		else{
 			model.addAttribute("serverTime", "null");

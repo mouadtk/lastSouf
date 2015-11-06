@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope("prototype")
-public abstract class AbstractTask extends Thread {
+public abstract class AbstractTask extends Thread  implements TaskInterface{
 	
 	long id;
 	String Taskname;
@@ -87,21 +87,25 @@ public abstract class AbstractTask extends Thread {
 		Status =  "Run";
 	}
 	
-	void Launch(){
+	@Override
+	public void Start(){
 		System.out.println("launching 	task "+id+" ...");
 	}
 	
-	void Stop(){
+	@Override
+	public void ShutDown(){
 		Status =  "Stop";
 		System.out.println("Stoping 	task "+id+" ...");
 	}
 	
-	void Resume(){
+	@Override
+	public void Resume(){
 		Status =  "Run";
 		System.out.println("Resuming 	task "+id+" ...");
 	}
 	
-	void Kill(){
+	@Override
+	public void Pause(){ 
 		System.out.println("Killing 	task "+id+" bye!!");
 	}
 }

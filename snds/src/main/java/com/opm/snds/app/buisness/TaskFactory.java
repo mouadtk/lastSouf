@@ -46,7 +46,7 @@ public class TaskFactory {
 	}
 	
 	public boolean PauseTask(String key){
-		Tasks.get(key).Stop();
+		Tasks.get(key).Pause();
 		return true;
 	}
 

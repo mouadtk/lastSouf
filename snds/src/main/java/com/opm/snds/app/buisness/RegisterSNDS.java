@@ -41,16 +41,19 @@ public class RegisterSNDS extends AbstractTask {
 	public static String _Postmaster_Link 		= "apps1.web.nrb-apps.com/apps/feedback_loop/fbl.php";
 	public static String _EditProfile_Link		= "https://postmaster.live.com/snds/pref.aspx";
 	
-	private WebDriver driver;
-	private List<Server> _SERVERS;
+	private WebDriver 		driver;  
+	private List<Server>	_SERVERS;
 	private List<UserAccount>  _USER;
-
+	
 	private String postmasterUsername = "tribak.mouad";
 	private String postmasterPassword = "4A66T6vfWKxs";
 	
 	@Autowired
-	IPadressDAO ipDOA;
+	private IPadressDAO ipDOA;
 	
+	/***
+	 * Constructs
+	 */
 	public RegisterSNDS(){}
 	
 	public RegisterSNDS(List<UserAccount> acct, List<Server> srv) {
@@ -58,6 +61,35 @@ public class RegisterSNDS extends AbstractTask {
 		_SERVERS =  srv;
 		_USER 	 =  acct;
 	}
+	
+	/**
+	 * Setters & Getters 
+	 **/
+	public IPadressDAO getIpDOA() {
+		return ipDOA;
+	}
+
+	public void setIpDOA(IPadressDAO ipDOA) {
+		this.ipDOA = ipDOA;
+	}
+
+	public List<Server> get_SERVERS() {
+		return _SERVERS;
+	}
+
+	public void set_SERVERS(List<Server> _SERVERS) {
+		this._SERVERS = _SERVERS;
+	}
+
+	public List<UserAccount> get_USER() {
+		return _USER;
+	}
+
+	public void set_USER(List<UserAccount> _USER) {
+		this._USER = _USER;
+	}
+
+	/*****   End Setters & Getters ******/
 	
 	public String checkRDNS(IPAdress ip){
 		InetAddress addr;
@@ -89,7 +121,7 @@ public class RegisterSNDS extends AbstractTask {
 		
 		
 	}
-	
+	 
 	private void launchDriver() {
 		/**
 		 * launch the browser.
@@ -128,7 +160,6 @@ public class RegisterSNDS extends AbstractTask {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 	
 	private boolean RequestAccess(IPAdress ip) {
@@ -163,7 +194,7 @@ public class RegisterSNDS extends AbstractTask {
 			List<WebElement> MailRadio = driver.findElements(By.cssSelector("input[id*=RadioButtonList1]"));
 			System.out.println(MailRadio.size());
 			for (WebElement Elmt : MailRadio) {
-				System.out.println(Elmt.getAttribute("value").trim()+"  "+ip.getParent().getDomain());
+				System.out.println(Elmt.getAttribute("value").trim()+"  "+ ip.getParent().getDomain());
 				if (Elmt.getAttribute("value").trim().equals("postmaster@" + ip.getParent().getDomain())) {
 					postmaster = Elmt;
 					break;
@@ -249,7 +280,7 @@ public class RegisterSNDS extends AbstractTask {
 	 * @param user
 	 * @return
 	 **/
-	public boolean doRegisterSNDS( IPAdress _IP, UserAccount user){
+	public boolean doRegisterSNDS(IPAdress _IP, UserAccount user){
 		
 		launchDriver();
 		if(!Login(user.getLogin(),user.getPasswd()))
@@ -270,7 +301,9 @@ public class RegisterSNDS extends AbstractTask {
 			}else{
 				try{
 					driver.quit();
-				}catch(Exception e){}
+				}catch(Exception e){
+					
+				}
 				return false;
 			}
 			return false;
@@ -316,26 +349,26 @@ public class RegisterSNDS extends AbstractTask {
 		}
 		return count;
 	}
-		
+
 	public static void main(String[] args) throws Exception {
 
 		IPAdress ip = new IPAdress();
 		ip.setIP("68.233.227.35");
 		ip.setDomain("bivse.developersture.com");
-		Server srv =  new Server();	
+		Server srv =  new Server();
 		srv.setDomain("developersture.com");
-		srv.setName("ssv999");		
-		ip.setParent(srv);			
+		srv.setName("ssv999");
+		ip.setParent(srv);
 		
 		UserAccount usr = new UserAccount();
-		usr.setLogin("euni84forrest71444@hotmail.com");
-		usr.setPasswd("3hkk6vIahcbB");
+		usr.setLogin("LethaGrill@hotmail.com");
+		usr.setPasswd("rn03zksz");
 		 /**
-		  *	L9issa lkamila.		
-		  **/						
+		  *	L9issa lkamila.
+		  **/
 		RegisterSNDS snds = new RegisterSNDS();
 		snds.doRegisterSNDS(ip,usr);
-		
+
 		/***
 		rDNS 
 		InetAddress addr = InetAddress.getByName("74.208.132.131");
@@ -344,30 +377,6 @@ public class RegisterSNDS extends AbstractTask {
 		***/
 	}
 	
-	public IPadressDAO getIpDOA() {
-		return ipDOA;
-	}
-	
-	public void setIpDOA(IPadressDAO ipDOA) {
-		this.ipDOA = ipDOA;
-	}
-
-	public List<Server> get_SERVERS() {
-		return _SERVERS;
-	}
-
-	public void set_SERVERS(List<Server> _SERVERS) {
-		this._SERVERS = _SERVERS;
-	}
-
-	public List<UserAccount> get_USER() {
-		return _USER;
-	}
-
-	public void set_USER(List<UserAccount> _USER) {
-		this._USER = _USER;
-	}
-
 	@Override
 	public void run(){
 		try{

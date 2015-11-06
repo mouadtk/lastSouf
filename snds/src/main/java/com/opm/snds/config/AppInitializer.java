@@ -31,6 +31,5 @@ public class AppInitializer implements WebApplicationInitializer {
         dispatcher.addMapping("/");
         
         // servletContext.addListener(new SessionListener());
-	}
-	
+	}	
 }

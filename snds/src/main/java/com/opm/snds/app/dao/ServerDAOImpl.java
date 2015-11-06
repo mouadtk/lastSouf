@@ -133,5 +133,23 @@ public class ServerDAOImpl implements ServerDAO {
 		}
 	}
 
+	@Override
+	public List<Server> getAllServersByGroupFull(String GroupName) {
+		
+		try{
+			Session session  = HibernateSessFactory.getCurrentSession();
+			Criteria crit = session.createCriteria(Server.class);
+			@SuppressWarnings("unchecked")
+			List<Server> listServer  = (List<Server>)  crit.add(Restrictions.like("EntityGroup", GroupName))
+										.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();			
+			for(Server srv : listServer)
+				Hibernate.initialize(srv.getChilds());
+			return listServer;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	
 }

@@ -57,5 +57,5 @@ public class AppConfig extends  WebMvcConfigurerAdapter{
 //	    propertiesFactoryBean.setLocation(resource);
 //	    return propertiesFactoryBean;
 //	}
-//	
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,17 +44,18 @@ public class RegisterSNDSController {
 	@Autowired 
 	ServerDAO DAO_Server;
 	@Autowired 
-	IPadressDAO DAO_IP;
-	
+	IPadressDAO DAO_IP;	
 	@Autowired
 	ServerService S_Server;
 	@Autowired	
 	RegisterSNDS  Reg_SNDS;
 	@Autowired
 	ProcessSNDS Proce_SNDS;
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 **/
+	@Secured({"MAILER","MAILER"})
 	@RequestMapping(value = {"/", "", "/RegisterForm"}, method = RequestMethod.GET)
 	public ModelAndView home(){
 		

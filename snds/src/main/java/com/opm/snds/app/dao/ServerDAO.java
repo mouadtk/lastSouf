@@ -16,6 +16,7 @@ public interface ServerDAO {
 	public boolean UpdateServer(Server O);
 	public List<Server> getAllServers();
 	public List<Server> getAllServersFull(); // with IPSList
+	public List<Server> getAllServersByGroupFull(String GroupName); // with IPSList
 	
 	public Server getServerByName(String Name);
 	public Server getServerByIP(String ip);

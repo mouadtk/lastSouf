@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.opm.snds.app.model.Server;
  */
 @Controller
 @RequestMapping("/Reports")
+@Secured({"ROLE_ADMIN"})
 public class ReportingController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportingController.class);
@@ -39,12 +41,13 @@ public class ReportingController {
 	 */
 	@RequestMapping(value = {"/", "/Servers"}, method = RequestMethod.GET)
 	public ModelAndView home() {
-		
 
 		ModelAndView mv = new ModelAndView("reports/index");
-		List<Server> _SRV = srv.getAllServersFull();
+		List<Server> _SRV =  srv.getAllServersFull();
+		int i = 0;
 		for (Server sv : _SRV) {
-			System.out.println(sv.getName());
+			if(i==20) break;
+			i++;
 			for(IPAdress ip  : sv.getChilds()){
 				System.out.println( "child  : " + ip.getIP());
 			}
@@ -54,13 +57,12 @@ public class ReportingController {
 	}
 	
 	/**
-	 * destails de serveur + les ips
-	 */
+	 * destails de serveur + les ips*/
+	@Secured({"ROLE_ADMIN", "ROLE_MAILER"})
 	@RequestMapping(value= "/ServerDetails", method = RequestMethod.GET, params = "id")
 	public ModelAndView ServerDetails(@RequestParam(value = "id") String ID_SERV){
 		
-		ModelAndView mv = new ModelAndView("reports/ServerDetails");
-		
+		ModelAndView mv = new ModelAndView("reports/ServerDetails");		
 		mv.addObject("Server", ID_SERV);
 		return mv;
 	}
