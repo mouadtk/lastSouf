@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,8 +42,8 @@ public class SNDSData implements Serializable{
 	private String Comment;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="IPADRESS_ID", nullable=false)
-	IPAdress ip;
+    @JoinColumn(name="SNDS_ID", nullable=false)
+	private SNDS snds;
 	
 	public int getId() {
 		return Id;
@@ -140,14 +139,6 @@ public class SNDSData implements Serializable{
 
 	public void setComment(String comment) {
 		Comment = comment;
-	}
-
-	public IPAdress getIp() {
-		return ip;
-	}
-
-	public void setIp(IPAdress ip) {
-		this.ip = ip;
 	}
 
 }

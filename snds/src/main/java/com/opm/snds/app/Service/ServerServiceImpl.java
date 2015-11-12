@@ -17,12 +17,12 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.opm.snds.app.dao.IPadressDAO;
-import com.opm.snds.app.dao.ServerDAO;
-import com.opm.snds.app.dao.UserAccountDAO;
+import com.opm.snds.app.dao.SNDS.UserAccountDAO;
+import com.opm.snds.app.dao.Server.IPadressDAO;
+import com.opm.snds.app.dao.Server.ServerDAO;
 import com.opm.snds.app.model.IPAdress;
 import com.opm.snds.app.model.Server;
-import com.opm.snds.app.model.UserAccount;
+import com.opm.snds.app.model.UserSNDS;
 
 @Service("ServerService")
 @Transactional
@@ -37,7 +37,7 @@ public class ServerServiceImpl implements ServerService {
 	
 	@Override
 	public Map<String, Server> LoadServers(String SrcFilePath, Map<String, Server> MyServers) throws IOException{
-		UserAccount _user = user.getUSerByLogin("euni84forrest71444@hotmail.com");
+		UserSNDS _user = user.getUSerByLogin("euni84forrest71444@hotmail.com");
 		try {
 			FileInputStream file = new FileInputStream(new File(SrcFilePath));
 			XSSFWorkbook workbook = new XSSFWorkbook(file); // Create Workbook instance holding reference to .xlsx file
@@ -116,6 +116,5 @@ public class ServerServiceImpl implements ServerService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }

@@ -6,11 +6,9 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -38,10 +36,10 @@ public class Server implements Serializable{
 	@OneToMany( mappedBy = "Parent")
 	Set<IPAdress> Childs = new HashSet<IPAdress>(0);
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="USER_ID", nullable=true)
-	private UserAccount user;
-	
+	/***** Test ****
+	@ManyToMany
+	Set<Operation> operations ;
+	*/
 	public Server(String... args){
 		
 		name 	=  args[0];
@@ -101,12 +99,6 @@ public class Server implements Serializable{
 		Childs = childs;
 	}
 
-	public UserAccount getUser() {
-		return user;
-	}
-
-	public void setUser(UserAccount user) {
-		this.user = user;
-	}
+	
 	
 }

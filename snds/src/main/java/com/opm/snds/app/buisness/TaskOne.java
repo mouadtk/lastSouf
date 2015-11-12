@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.opm.snds.app.buisness.taskFactory.AbstractTask;
+
 @Service
 @Scope("prototype")
 public class TaskOne extends AbstractTask{
@@ -22,7 +24,31 @@ public class TaskOne extends AbstractTask{
 		LinkA =  "link 2 B";
 	}
 
-	/**
-	 * Specific 
-	 **/
+	@Override 
+	public void run(){}
+	
+	@Override
+	public void Launch() {
+		run();
+	}
+
+	@Override
+	public void Pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ShutDown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void Resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

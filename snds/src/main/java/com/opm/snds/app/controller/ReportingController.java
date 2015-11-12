@@ -1,22 +1,19 @@
 package com.opm.snds.app.controller;
 
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.opm.snds.app.dao.IPadressDAO;
-import com.opm.snds.app.dao.ServerDAO;
+import com.opm.snds.app.dao.Server.IPadressDAO;
+import com.opm.snds.app.dao.Server.ServerDAO;
 import com.opm.snds.app.model.IPAdress;
 import com.opm.snds.app.model.Server;
 

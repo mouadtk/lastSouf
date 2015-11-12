@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
@@ -18,11 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.opm.snds.app.buisness.RegisterSNDS;
-import com.opm.snds.app.buisness.TaskFactory;
-import com.opm.snds.app.dao.IPadressDAO;
-import com.opm.snds.app.dao.ServerDAO;
+import com.opm.snds.app.buisness.snds.RegisterSNDS;
+import com.opm.snds.app.buisness.taskFactory.TaskFactory;
+import com.opm.snds.app.buisness.taskFactory.TaskNames;
+import com.opm.snds.app.dao.ComcastDlistingDAO;
+import com.opm.snds.app.dao.OperationDAO;
+import com.opm.snds.app.dao.SNDS.SNDSDAO;
+import com.opm.snds.app.dao.Server.IPadressDAO;
+import com.opm.snds.app.dao.Server.ServerDAO;
+import com.opm.snds.app.model.ComcastDlisting;
 import com.opm.snds.app.model.IPAdress;
+import com.opm.snds.app.model.Operation;
+import com.opm.snds.app.model.SNDS;
 import com.opm.snds.app.model.Server;
 
 /**
@@ -40,15 +48,39 @@ public class HomeController {
 	IPadressDAO ipdao;
 	@Autowired
 	TaskFactory AllTasks; 
-		
+	@Autowired
+	SNDSDAO snds;
+	@Autowired
+	ComcastDlistingDAO  cocmastDAO;
+	
+	@Autowired
+	OperationDAO<Operation> operationDAO;
+	
 	@RequestMapping(value={"/index","/", ""}, method = RequestMethod.GET)
 	public ModelAndView index(Principal user){
 		
-		
+		/** saving snds **/
+		SNDS a = new SNDS();
+		a.setStatus("processing");
+		snds.AddSNDS(a);
+		/** sanving dlisting comcast **/
+		ComcastDlisting comcast = new ComcastDlisting();
+		comcast.setReference("ddfsqf");
+		comcast.setTatatat("sqdsdfsdf");
+		cocmastDAO.AddComcastDlisting(comcast);
+
+		List<Operation> ops = operationDAO.getSNDSOperation();
+		for(Operation op : ops){
+			if(op instanceof SNDS)
+				System.out.println("SNDS  : "+ (((SNDS)op)));
+//			if(op instanceof ComcastDlisting)
+//				System.out.println("Comcast  : "+ (((ComcastDlisting)op).getTatatat()));
+		}
+			
+		System.out.println(TaskNames.IPOwner);
 		ModelAndView mv =  new ModelAndView("/home/home");
 		mv.addObject("user", user.getName());
 		return mv;
-	
 	}
 	
 	@RequestMapping(value = {"/home"}, method = RequestMethod.GET)
@@ -63,16 +95,16 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		/**
-		 * here the work begins	
-		TaskOne  t1 = (TaskOne) AllTasks.CeateTask("Task1");
-		TaskTwo  t2 = (TaskTwo) AllTasks.CeateTask("Task2");
+		 * here the work begins
+		TaskOne  t1 = (TaskOne) AllTasks.CeateTask(TaskNames.TaskOne);
+		TaskTwo  t2 = (TaskTwo) AllTasks.CeateTask(TaskNames.TaskTwo);
 		t1.setId(1);
 		t2.setId(2);
 		AllTasks.AddNewTask("1", t1);
 		AllTasks.AddNewTask("2", t2);
 		mv.addObject("task1","eeeeeeee");
 		mv.addObject("task2",AllTasks.GetTask("2").getId());
-		*/
+		/**/
 		return mv;
 	}
 	
@@ -84,7 +116,7 @@ public class HomeController {
 		 * return the count of taks in present
 		 **/
 		ModelAndView mv = new  ModelAndView("home/index");
-		RegisterSNDS  t1 = (RegisterSNDS) AllTasks.CeateTask("SNDS");
+		RegisterSNDS  t1 = (RegisterSNDS) AllTasks.CeateTask(TaskNames.SNDS);
 		t1.setId(new Random().nextInt());
 		t1.setTaskname(key);
 		

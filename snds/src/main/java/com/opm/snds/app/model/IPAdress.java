@@ -36,10 +36,7 @@ public class IPAdress implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SERVER_ID", nullable=true)
 	private Server Parent;
-	
-	@OneToMany(fetch =  FetchType.LAZY, mappedBy="ip")
-	Set<SNDSData> data = new HashSet<SNDSData>(0);
-	
+		
 	/****/
 	public IPAdress(){
 		
@@ -96,11 +93,5 @@ public class IPAdress implements Serializable{
 	public void setParent(Server parent) {
 		Parent = parent;
 	}
-	public Set<SNDSData> getData() {
-		return data;
-	}
-	public void setData(Set<SNDSData> data) {
-		this.data = data;
-	} 
-	
+		
 }

@@ -13,8 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="useraccount")
-public class UserAccount implements Serializable{
+@Table(name="usersnds")
+public class UserSNDS implements Serializable{
 	
 	/**
 	 * 
@@ -24,13 +24,15 @@ public class UserAccount implements Serializable{
 	@Id @GeneratedValue
 	@Column(name = "USER_ID")
 	private long id;
+	private String firstname;
+	private String lastname;	
 	private String login;
 	private String passwd;
 	private String DataLink;
 	private String IPStatusLink;
 	
-	@OneToMany(fetch =  FetchType.LAZY, mappedBy="user")
-	Set<Server> data = new HashSet<Server>(0);
+	@OneToMany(fetch =  FetchType.LAZY, mappedBy="usersnds")
+	Set<SNDS> snds = new HashSet<SNDS>(0);
 
 	public long getId() {
 		return id;
@@ -38,6 +40,22 @@ public class UserAccount implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getLogin() {
@@ -56,13 +74,7 @@ public class UserAccount implements Serializable{
 		this.passwd = passwd;
 	}
 
-	public Set<Server> getData() {
-		return data;
-	}
-
-	public void setData(Set<Server> data) {
-		this.data = data;
-	}
+	
 
 	public String getDataLink() {
 		return DataLink;
@@ -78,6 +90,14 @@ public class UserAccount implements Serializable{
 
 	public void setIPStatusLink(String iPStatusLink) {
 		IPStatusLink = iPStatusLink;
+	}
+
+	public Set<SNDS> getData() {
+		return snds;
+	}
+
+	public void setData(Set<SNDS> data) {
+		this.snds = data;
 	}
 
 

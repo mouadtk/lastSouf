@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.opm.snds.app.Service.ServerService;
-import com.opm.snds.app.buisness.RegisterSNDS;
-import com.opm.snds.app.buisness.ProcessSNDS;
-import com.opm.snds.app.dao.IPadressDAO;
-import com.opm.snds.app.dao.ServerDAO;
+import com.opm.snds.app.buisness.snds.ProcessSNDS;
+import com.opm.snds.app.buisness.snds.RegisterSNDS;
+import com.opm.snds.app.dao.Server.IPadressDAO;
+import com.opm.snds.app.dao.Server.ServerDAO;
 import com.opm.snds.app.model.Server;
-import com.opm.snds.app.model.UserAccount;
+import com.opm.snds.app.model.UserSNDS;
 
 @Controller
 @RequestMapping("/Register")
@@ -38,9 +35,9 @@ public class RegisterSNDSController {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(RegisterSNDSController.class);
-	@Autowired
-    private Environment environment;
 	
+	@Autowired
+    private Environment environment;	
 	@Autowired 
 	ServerDAO DAO_Server;
 	@Autowired 
@@ -53,7 +50,7 @@ public class RegisterSNDSController {
 	ProcessSNDS Proce_SNDS;
 	
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * 
 	 **/
 	@Secured({"MAILER","MAILER"})
 	@RequestMapping(value = {"/", "", "/RegisterForm"}, method = RequestMethod.GET)
@@ -64,10 +61,10 @@ public class RegisterSNDSController {
 			/***
 			 * User Accounts that'll be used
 			 **/
-			UserAccount usr = new UserAccount();
+			UserSNDS usr = new UserSNDS();
 			usr.setLogin("buskard97ba58084@hotmail.com");
 			usr.setPasswd("p4EZBVzwZKtb");
-			List<UserAccount> Users =  new ArrayList<UserAccount>();
+			List<UserSNDS> Users =  new ArrayList<UserSNDS>();
 			Users.add(usr);
 			/**
 			 * Load And Persist Servers(With IPs) in Database
