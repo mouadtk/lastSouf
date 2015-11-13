@@ -17,7 +17,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.opm.snds.app.dao.SNDS.UserAccountDAO;
+import com.opm.snds.app.dao.SNDS.UserSNDSDAO;
 import com.opm.snds.app.dao.Server.IPadressDAO;
 import com.opm.snds.app.dao.Server.ServerDAO;
 import com.opm.snds.app.model.IPAdress;
@@ -33,7 +33,7 @@ public class ServerServiceImpl implements ServerService {
 	@Autowired
 	IPadressDAO ip;
 	@Autowired
-	UserAccountDAO user;
+	UserSNDSDAO user;
 	
 	@Override
 	public Map<String, Server> LoadServers(String SrcFilePath, Map<String, Server> MyServers) throws IOException{

@@ -36,11 +36,12 @@ public class IPAdress implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="SERVER_ID", nullable=true)
 	private Server Parent;
-		
+	
+	@OneToMany( mappedBy = "OpIP")
+	Set<Operation> operations = new HashSet<Operation>();
+
 	/****/
-	public IPAdress(){
-		
-	};
+	public IPAdress(){};
 	
 	public IPAdress(String... args){
 		

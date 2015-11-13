@@ -22,12 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.opm.snds.app.buisness.snds.RegisterSNDS;
 import com.opm.snds.app.buisness.taskFactory.TaskFactory;
 import com.opm.snds.app.buisness.taskFactory.TaskNames;
-import com.opm.snds.app.dao.ComcastDlistingDAO;
 import com.opm.snds.app.dao.OperationDAO;
+import com.opm.snds.app.dao.Dlisting.ComcastDlistingDAO;
 import com.opm.snds.app.dao.SNDS.SNDSDAO;
 import com.opm.snds.app.dao.Server.IPadressDAO;
 import com.opm.snds.app.dao.Server.ServerDAO;
-import com.opm.snds.app.model.ComcastDlisting;
 import com.opm.snds.app.model.IPAdress;
 import com.opm.snds.app.model.Operation;
 import com.opm.snds.app.model.SNDS;
@@ -54,7 +53,10 @@ public class HomeController {
 	ComcastDlistingDAO  cocmastDAO;
 	
 	@Autowired
-	OperationDAO<Operation> operationDAO;
+	OperationDAO operationDAO;
+	
+	@Autowired
+	SNDSDAO sndsDAO;
 	
 	@RequestMapping(value={"/index","/", ""}, method = RequestMethod.GET)
 	public ModelAndView index(Principal user){
@@ -63,16 +65,20 @@ public class HomeController {
 		SNDS a = new SNDS();
 		a.setStatus("processing");
 		snds.AddSNDS(a);
-		/** sanving dlisting comcast **/
+		/** sanving dlisting comcast **
 		ComcastDlisting comcast = new ComcastDlisting();
 		comcast.setReference("ddfsqf");
 		comcast.setTatatat("sqdsdfsdf");
-		cocmastDAO.AddComcastDlisting(comcast);
-
-		List<Operation> ops = operationDAO.getSNDSOperation();
+		cocmastDAO.AddComcastDlisting(comcast);*/
+		IPAdress adres =  ipdao.getIPAdressByIP("66.147.230.66");
+		
+		List<Operation> ops = operationDAO.getSNDSofIPAdress(adres);
 		for(Operation op : ops){
-			if(op instanceof SNDS)
-				System.out.println("SNDS  : "+ (((SNDS)op)));
+			if(op instanceof SNDS){
+				((SNDS)op).setStep(5);
+				sndsDAO.UpdateSNDS(((SNDS)op));
+			}
+				//System.out.println("SNDS  : "+ );
 //			if(op instanceof ComcastDlisting)
 //				System.out.println("Comcast  : "+ (((ComcastDlisting)op).getTatatat()));
 		}

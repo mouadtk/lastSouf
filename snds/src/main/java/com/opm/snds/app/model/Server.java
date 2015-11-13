@@ -36,10 +36,10 @@ public class Server implements Serializable{
 	@OneToMany( mappedBy = "Parent")
 	Set<IPAdress> Childs = new HashSet<IPAdress>(0);
 	
-	/***** Test ****
-	@ManyToMany
-	Set<Operation> operations ;
-	*/
+	/***** Test *****/
+	@OneToMany( mappedBy = "OpServer")
+	Set<Operation> operations = new HashSet<Operation>();
+
 	public Server(String... args){
 		
 		name 	=  args[0];
